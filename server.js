@@ -6,7 +6,7 @@ const authRoutes = require("./routes/authRoutes.js");
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json);
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.send('hola');
@@ -14,6 +14,6 @@ app.get('/', (req, res) => {
 
 authRoutes(app);
 
-app.listen(port, () => {
+app.listen(port, '',() => {
     console.log('Exemple app');
 })
