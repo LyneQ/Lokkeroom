@@ -1,19 +1,18 @@
-const express = require("express");
-const bodyParser = require('body-parser');
-
-const authRoutes = require("./routes/authRoutes.js");
+import express from 'express';
+import routes from './routes/authRoutes.js';
+import dotenv from 'dotenv';
 
 const app = express();
-const port = 3000;
 
-app.use(bodyParser.json());
+app.use(express.json());
+dotenv.config();
 
 app.get('/', (req, res) => {
     res.send('hola');
 })
 
-authRoutes(app);
+routes(app);
 
-app.listen(port, '',() => {
-    console.log('Exemple app');
+app.listen(process.env.API_PORT,() => {
+    console.log(`Server listening on port  \`${process.env.API_PORT}\``);
 })

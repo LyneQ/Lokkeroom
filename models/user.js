@@ -1,8 +1,9 @@
-const pool = require('../config/db');
+import pool from '../config/db.js';
 
-class User {
+export default class User {
 
-    static async createUser(email, password){
+
+    async createUser(email, password){
         const conn = await pool.getConnection();
         try{
             const results = await conn.query('INSERT INTO users (email, password) VALUES (?,?)',[email, password]);
@@ -12,7 +13,7 @@ class User {
         }
     }
 
-    static async authenticate(email, password){
+    async authenticate(email, password){
 
         const conn = await pool.getConnection();
         try{
@@ -22,6 +23,4 @@ class User {
             if (conn) conn.release();
         }
     }
-}       
-
-module.exports = User;
+}

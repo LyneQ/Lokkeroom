@@ -1,31 +1,34 @@
-const bCrypt = require('bcrypt');
-const UserClass = require('../models/user.js');
-module.exports =  {
-    register: function(req, res){
+import bcrypt from 'bcrypt';
+import UserClass from '../models/user.js';
 
-        try {
 
-            console.log(req.body);
-            const {email, password} = req.body;
-            bCrypt.genSalt(1, (err, salt) => {
-                bCrypt.hash(password, salt, async (err, hash) => {
-                    const cryptPassword = hash;
-                    const User = new UserClass();
-                    await UserClass.createUser(email, cryptPassword);
-                    res.send("c'est bon");
-                })
-            })
+async function register(req, res) {
+    try {
+        console.log(req.body);
+        const {email, password} = req.body;
+        const encryptedPassword = await bcrypt.hash(password, 10);
 
-        } catch (error) {
-            console.log(error);
-            res.send("error");
-        }
+        const User = new UserClass();
+        await User.createUser(email, encryptedPassword);
 
-    },
-    login: function(){
-
-    },
-    middleware: function(){
-
+    } catch (error) {
+        console.log(error);
+        res.send("error");
     }
 }
+
+async function login (req, res) {
+    // TODO login
+}
+
+async function middleware (req, res, next) {
+    // TODO middleware
+}
+
+// TODO Login et middleware
+
+export default {
+    register,
+    login,
+    middleware
+};

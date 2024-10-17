@@ -1,0 +1,11 @@
+### GET request to example server
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "email": "john@gmail.com",
+  "password": "password"
+}
+### Get root
+GET http://localhost:3000/
+Content-Type: application/json
