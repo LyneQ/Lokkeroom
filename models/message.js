@@ -10,8 +10,6 @@ export default class Message {
         [lobbyID],
       );
 
-        console.log(lobbyExist.length === 0);
-
       if ( lobbyExist.length === 0 ) return false;
 
       const results = await conn.query(
