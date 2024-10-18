@@ -14,8 +14,8 @@ async function register(req, res) {
       res.status(200).send("User successfully created");
     }
   } catch (error) {
-    console.log(error);
-    return res.status(400).send(error.sqlMessage);
+    console.error(error);
+    return res.status(400).send(`Bad Request`);
   }
 }
 
@@ -35,8 +35,8 @@ async function login(req, res) {
       res.status(401).send("Invalid credentials");
     }
   } catch (error) {
-    console.log(error);
-    return res.status(400).send(error.sqlMessage);
+    console.error(error);
+    return res.status(400).send(`Bad Request`);
   }
 }
 
