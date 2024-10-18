@@ -12,6 +12,8 @@ async function register(req, res) {
 
     if (userCreated) {
       res.status(200).send("User successfully created");
+    } else {
+        res.status(400).send("User could not be created");
     }
   } catch (error) {
     console.error(error);

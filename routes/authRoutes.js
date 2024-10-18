@@ -1,12 +1,11 @@
 import authController from '../controllers/authController.js';
 
 
-function routes(app){
+function authRoutes(app){
 
     app.post('/register', authController.register);
     app.post('/login', authController.login);
 
-    app.use(authController.middleware);
 }
 
-export default routes;
+export default authRoutes;
