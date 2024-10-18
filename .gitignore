@@ -38,6 +38,9 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# HTTP testing file
+*.http
+
 # Miscellaneous
 *.bak
 *.tmp
