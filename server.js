@@ -1,6 +1,7 @@
 import express from 'express';
 import authRoutes from './routes/authRoutes.js';
 import lobbyRoutes from './routes/lobbyRoutes.js';
+import messageRoutes from "./routes/messageRoutes.js";
 import dotenv from 'dotenv';
 
 const app = express();
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 
 authRoutes(app);
 lobbyRoutes(app);
+messageRoutes(app);
 
 
 app.listen(process.env.API_PORT,() => {
