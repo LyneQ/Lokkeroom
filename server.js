@@ -1,5 +1,6 @@
 import express from 'express';
-import routes from './routes/authRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import lobbyRoutes from './routes/lobbyRoutes.js';
 import dotenv from 'dotenv';
 
 const app = express();
@@ -11,7 +12,9 @@ app.get('/', (req, res) => {
     res.send('hola');
 })
 
-routes(app);
+authRoutes(app);
+lobbyRoutes(app);
+
 
 app.listen(process.env.API_PORT,() => {
     console.log(`Server listening on port  \`${process.env.API_PORT}\``);
