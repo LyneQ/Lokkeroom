@@ -22,5 +22,36 @@ export default class Message {
     }
   }
 
+  async getMessages(lobbyID) {
+    const conn = await pool.getConnection();
+    try {
+        return await conn.query("SELECT * FROM messages WHERE lobby_id = ?", [lobbyID]);
+
+    } finally {
+        if (conn) await conn.release();
+    }
+  }
+
+  async getMessageById(lobbyID, messageID) {
+    const conn = await pool.getConnection();
+    try {
+      return await conn.query("SELECT * FROM messages WHERE lobby_id = ? AND id = ?", [lobbyID, messageID]);
+    } finally {
+      if (conn) await conn.release();
+    }
+  }
+
+  async deleteMessage(messageID) {
+    const conn = await pool.getConnection();
+    try {
+      const messageExist = await conn.query("SELECT * FROM messages WHERE id = ?", [messageID]);
+
+      if( messageExist.length === 0 ) return false;
+
+      return !!conn.execute("DELETE FROM messages WHERE id = ?", [messageID]);
+    } finally {
+      if (conn) await conn.release();
+    }
+  }
 
 }
