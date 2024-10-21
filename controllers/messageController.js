@@ -26,7 +26,9 @@ async function getMessage(req, res) {
 
     const message = await Message.getMessageById(lobbyId, messageId);
 
-    if (!message) return res.status(400).send("Bad request - lobbyId or messageId not found");
+    if (!message) return res.status(404).send("Not found - message not found");
+
+    if (message.length === 0) return res.status(404).send("Not Found - message not found");
 
     res.status(200).send(message);
 
@@ -42,7 +44,7 @@ async function postMessages(req, res) {
   const Message = new MessageClass();
   const message = await Message.sendMessages(lobbyId, userId, content);
 
-  if (!message) return res.status(400).send("Bad request - lobbyId not found");
+  if (!message) return res.status(404).send("Not found - lobbyId not found");
 
   res.status(201).send(message);
 }
@@ -55,7 +57,7 @@ async function deleteMessage(req, res) {
   const Message = new MessageClass();
   const message = await Message.deleteMessage(messageId);
 
-  if ( !message ) return res.status(400).send("Bad request - message not found");
+  if ( !message ) return res.status(404).send("Not found - message not found");
 
   res.status(200).send(message);
 }
