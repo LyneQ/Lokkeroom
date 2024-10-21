@@ -3,11 +3,11 @@ import MessageController from '../controllers/messageController.js';
 
 export default function messageRoutes(app) {
 
-    app.get('/api/lobby/:lobbyId/:messageId', MessageController.getMessage);
-    app.get('/api/lobby/:lobbyId', MessageController.getMessages);
+    app.get('/api/message/:lobbyId/:messageId', MessageController.getMessage);
 
-    app.post('/api/lobby/:lobbyId', MessageController.postMessages);
+    app.get('/api/message/:lobbyId', MessageController.getMessages);
+    app.post('/api/message/:lobbyId', MessageController.postMessages);
 
-    app.delete('/api/messages/:messageId', MessageController.deleteMessage);
+    app.delete('/api/message/:messageId', MessageController.deleteMessage);
 
 }
