@@ -6,8 +6,12 @@ async function register(req, res) {
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).send("Email and password are required");
 
-    const encryptedPassword = await bcrypt.hash(password, 1);
     const User = new UserClass();
+    const userExists = await User.getUserByEmail(email);
+
+    if (userExists) return res.status(400).send("An account with that email already exists");
+
+    const encryptedPassword = await bcrypt.hash(password, 1);
     const userCreated = await User.createUser(email, encryptedPassword);
 
     if (userCreated) {
