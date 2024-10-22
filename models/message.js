@@ -2,19 +2,16 @@ import connexion from "../config/db.js";
 
 export default class Message {
 
-  connexion;
-
   async sendMessages(lobbyID, userID, message) {
     try {
-      this.connexion = connexion;
-      const lobbyExist = await this.connexion.query(
+      const lobbyExist = await connexion.query(
         "SELECT * FROM lobbies WHERE id = ?",
         [lobbyID],
       );
 
       if ( lobbyExist.length === 0 ) return false;
 
-      const results = await this.connexion.query(
+      const results = await connexion.query(
         "INSERT INTO messages (lobby_id, user_id, content) VALUES (?,?,?)",
         [lobbyID, userID, message],
       );

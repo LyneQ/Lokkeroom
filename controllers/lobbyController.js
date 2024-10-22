@@ -21,8 +21,6 @@ async function createLobby(req, res) {
     return res.status(400).send(error.message);
   }
 }
-<<<<<<< HEAD
-=======
 
 async function getUsers(req, res) {
     try {
@@ -48,9 +46,6 @@ async function getUsers(req, res) {
         return res.status(400).send(error.message);
     }
 }
-
-// TO DO
->>>>>>> 687b70f0621d68a2a1cc530e7363f6dcd18b0f84
 
 async function addUserLobby(req, res) {
   const { userId, lobbyId, adminId } = req.body;
@@ -100,11 +95,7 @@ await function middlewares(req, res, next) {
 
 export default {
   createLobby,
-<<<<<<< HEAD
   addUserLobby,
   removeUserLobby,
-=======
   getUsers
-  //addUserLobby
->>>>>>> 687b70f0621d68a2a1cc530e7363f6dcd18b0f84
 };

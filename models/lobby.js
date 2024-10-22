@@ -14,14 +14,8 @@ export default class LobbyClass {
                 throw new Error("user not found");
             }
 
-<<<<<<< HEAD
             const result = await connexion.query(
                 `INSERT INTO lobbies (name, admin_id) VALUES (?,?)`,
-=======
-            const results = await connexion.query(
-                `INSERT INTO lobbies (name, admin_id)
-                 VALUES (?, ?)`,
->>>>>>> 687b70f0621d68a2a1cc530e7363f6dcd18b0f84
                 [name, adminID]
             );
             return result;
