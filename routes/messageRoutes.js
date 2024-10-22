@@ -7,6 +7,7 @@ export default function messageRoutes(app) {
 
     app.get('/api/message/:lobbyId', MessageController.getMessages);
     app.post('/api/message/:lobbyId', MessageController.postMessages);
+    app.patch('/api/message/:messageId', MessageController.editMessage);
 
     app.delete('/api/message/:messageId', MessageController.deleteMessage);
 

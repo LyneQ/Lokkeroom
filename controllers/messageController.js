@@ -57,6 +57,22 @@ async function postMessages(req, res) {
   }
 }
 
+async function editMessage(req, res) {
+  const {messageId} = req.params;
+  const { content, userId } = req.body;
+
+  if (!messageId || !content || !userId)
+    return res.status(400).send("Bad request - missing messageID or content");
+
+  const Message = new MessageClass();
+  const message = await Message.editMessage(messageId, content, userId);
+
+  if (!message) return res.status(404).send("Not found - message not found");
+  // TODO: fix message edit response when the ID is associated with a non-existent message
+
+  res.status(200).send("Message edited");
+}
+
 async function deleteMessage(req, res) {
   const { messageId } = req.params;
 
@@ -82,5 +98,6 @@ export default {
   getMessages,
   getMessage,
   postMessages,
+  editMessage,
   deleteMessage,
 };

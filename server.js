@@ -1,8 +1,9 @@
 import express from 'express';
+import dotenv from 'dotenv';
+
 import authRoutes from './routes/authRoutes.js';
 import lobbyRoutes from './routes/lobbyRoutes.js';
 import messageRoutes from "./routes/messageRoutes.js";
-import dotenv from 'dotenv';
 
 const app = express();
 
@@ -11,7 +12,7 @@ dotenv.config();
 
 app.get('/', (req, res) => {
     res.send('hola');
-})
+});
 
 authRoutes(app);
 lobbyRoutes(app);
