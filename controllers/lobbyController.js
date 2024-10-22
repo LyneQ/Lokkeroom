@@ -12,13 +12,13 @@ async function createLobby(req, res) {
     const Lobby = new LobbyClass();
     const userCreated = await Lobby.createLobby(name, adminID);
 
-    if (userCreated) {
+    if (userCreated[0].affectedRows) {
       res.status(200).send("Lobby successfully created");
     } else {
       res.status(400).send(`Bad Request (missing or incorrect data)`);
     }
   } catch (error) {
-    console.error(error.sqlMessage);
+    console.error(error);
     return res.status(400).send(error.message);
   }
 }

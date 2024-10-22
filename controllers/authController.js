@@ -9,7 +9,9 @@ async function register(req, res) {
     const User = new UserClass();
     const userExists = await User.getUserByEmail(email);
 
-    if (userExists) return res.status(400).send("An account with that email already exists");
+    console.log(userExists);
+
+    if (userExists.length > 0) return res.status(400).send("An account with that email already exists");
 
     const encryptedPassword = await bcrypt.hash(password, 1);
     const userCreated = await User.createUser(email, encryptedPassword);
@@ -33,7 +35,8 @@ async function login(req, res) {
 
     const User = new UserClass();
     const user = await User.getUserByEmail(email);
-    const match = await bcrypt.compare(password, user.password);
+    console.log(user);
+    const match = await bcrypt.compare(password, user[0].password);
 
     if (match) {
       res.status(200).send("User successfully authenticated");

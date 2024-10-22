@@ -15,7 +15,7 @@ export default class LobbyClass {
                 `INSERT INTO lobbies (name, admin_id) VALUES (?,?)`,
                 [name, adminID]
             );
-            return results.insertId;
+            return results;
         } catch (error) {
             throw error;
         }

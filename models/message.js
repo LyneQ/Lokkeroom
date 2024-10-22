@@ -18,9 +18,9 @@ export default class Message {
         "INSERT INTO messages (lobby_id, user_id, content) VALUES (?,?,?)",
         [lobbyID, userID, message],
       );
-      return results.insertId.toString();
+      return results[0].insertId.toString();
     } catch (error) {
-      console.error(error);
+        console.error(error);
       return false;
     }
   }
@@ -47,9 +47,9 @@ export default class Message {
     try {
       const messageExist = await connexion.query("SELECT * FROM messages WHERE id = ?", [messageID]);
 
-      if( messageExist.length === 0 ) return false;
+      if( messageExist[0].length === 0 ) return false;
 
-      return !!connexion.execute("DELETE FROM messages WHERE id = ?", [messageID]);
+      return connexion.query("DELETE FROM messages WHERE id = ?", [messageID]);
     } catch (error) {
       console.error(error);
       return false;

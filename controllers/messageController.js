@@ -1,14 +1,5 @@
 import MessageClass from "../models/message.js";
 
-/**
- * GET /api/lobby/[lobby-id]                An array containing all the message from the lobby
- *
- * GET /api/lobby/[lobby-id]/[message-id]   A single message object from the lobby
- *
- * POST /api/lobby/[lobby-id]               Send a message to the lobby
- *
- * PATCH /api/lobby/[message-id]            edit the message (message owner or admin)
- */
 
 async function getMessages(req, res) {
   const { lobbyId } = req.params;
@@ -51,10 +42,19 @@ async function postMessages(req, res) {
   if (!lobbyId)
     return res.status(400).send("Bad request - missing lobbyID or messageID");
 
-  const Message = new MessageClass();
-  const message = await Message.sendMessages(lobbyId, userId, content);
+  try {
+    const Message = new MessageClass();
+    const message = await Message.sendMessages(lobbyId, userId, content);
 
-  res.status(201).send(message);
+    if (!message) {
+      return res.status(400).send("Failed to send message");
+    }
+
+    res.status(201).send(message[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 }
 
 async function deleteMessage(req, res) {
@@ -63,12 +63,19 @@ async function deleteMessage(req, res) {
   if (!messageId)
     return res.status(400).send("Bad request - missing messageID");
 
-  const Message = new MessageClass();
-  const message = await Message.deleteMessage(messageId);
+  try {
+    const Message = new MessageClass();
+    const message = await Message.deleteMessage(messageId);
 
-  if (!message) return res.status(404).send("Not found - message not found");
+    if (!message) return res.status(404).send("Not found - message not found");
 
-  res.status(200).send(message);
+      console.log(message[0])
+
+    res.status(200).send(message[0].affectedRows > 0 ? "Message deleted" : "Failed to delete message");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 }
 
 export default {
