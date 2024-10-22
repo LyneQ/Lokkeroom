@@ -25,6 +25,19 @@ export default class Message {
     }
   }
 
+  async editMessage(messageID, message, userID) {
+    try {
+      const messageExist = await connexion.query("SELECT * FROM messages WHERE id = ? AND user_id = ? ", [messageID, userID]);
+
+      if( messageExist[0].length !== 1 ) return false;
+
+      return connexion.query("UPDATE messages SET content = ? WHERE id = ? AND user_id = ?", [message, messageID, userID]);
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   async getMessages(lobbyID) {
     try {
         return await connexion.query("SELECT * FROM messages WHERE lobby_id = ?", [lobbyID]);

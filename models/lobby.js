@@ -1,9 +1,12 @@
 import connexion from "../config/db.js";
 
 export default class LobbyClass {
+
     async createLobby(name, adminID) {
         try {
-            const [adminExists] = await connexion.query(`SELECT * FROM users WHERE id = ?`, [
+            const [adminExists] = await connexion.query(`SELECT *
+                                                         FROM users
+                                                         WHERE id = ?`, [
                 adminID,
             ]);
 
@@ -11,8 +14,14 @@ export default class LobbyClass {
                 throw new Error("user not found");
             }
 
+<<<<<<< HEAD
             const result = await connexion.query(
                 `INSERT INTO lobbies (name, admin_id) VALUES (?,?)`,
+=======
+            const results = await connexion.query(
+                `INSERT INTO lobbies (name, admin_id)
+                 VALUES (?, ?)`,
+>>>>>>> 687b70f0621d68a2a1cc530e7363f6dcd18b0f84
                 [name, adminID]
             );
             return result;
@@ -95,5 +104,32 @@ export default class LobbyClass {
         }catch(error){
             throw error;
     }
+    }
+
+    async getUser(lobbyId, userId) {
+        try {
+            const [user] = await connexion.query(
+                "SELECT * FROM lobby_users WHERE lobby_id = ? AND user_id = ?",
+                [lobbyId, userId]
+            );
+            return user;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getUsers(lobbyId) {
+        try {
+            console.log(lobbyId);
+            const [users] = await connexion.query(
+                `SELECT *
+                 FROM lobby_users
+                 WHERE lobby_id = ?`,
+                [lobbyId]
+            );
+            return users;
+        } catch (error) {
+            throw error;
+        }
     }
 }
