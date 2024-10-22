@@ -5,8 +5,8 @@ export default class User {
 
     async createUser(email, password){
         try{
-            const results = await conn.query('INSERT INTO users (email, password) VALUES (?,?)',[email, password]);
-            return results.insertId; 
+            const results = await connexion.query('INSERT INTO users (email, password) VALUES (?,?)',[email, password]);
+            return results[0];
         }catch(error){
             throw error;
             }
