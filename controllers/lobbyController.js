@@ -48,6 +48,11 @@ async function createLobby(req, res) {
 //   }
 // }
 
+async function removeUserLobby(req, res) {
+  const { lobbyId, userId, adminId } = req.body;
+  
+}
+
 
 await function middlewares(req, res, next) {
   // TODO middleware
@@ -56,4 +61,5 @@ await function middlewares(req, res, next) {
 export default {
   createLobby,
   //addUserLobby
+  //removeUserLobby
 };
