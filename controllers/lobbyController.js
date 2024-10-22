@@ -22,6 +22,32 @@ async function createLobby(req, res) {
     return res.status(400).send(error.message);
   }
 }
+
+async function getUsers(req, res) {
+    try {
+        const { userId } = req.params;
+        const { lobbyId } = req.body;
+        const Lobby = new LobbyClass();
+
+        let result = null;
+
+        if ( !lobbyId ) result = res.status(400).send("Bad request - missing or incorrect data");
+
+        if ( !userId ) result = await Lobby.getUsers(lobbyId, userId);
+        if ( userId ) result = await Lobby.getUser(lobbyId);
+
+        if (result) {
+            res.status(200).send(result);
+        } else {
+            res.status(400).send("Bad request - missing or incorrect data");
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(400).send(error.message);
+    }
+}
+
 // TO DO
 
 // async function addUserLobby(req, res) {
@@ -55,5 +81,6 @@ await function middlewares(req, res, next) {
 
 export default {
   createLobby,
+  getUsers
   //addUserLobby
 };

@@ -1,9 +1,12 @@
 import connexion from "../config/db.js";
 
 export default class LobbyClass {
+
     async createLobby(name, adminID) {
         try {
-            const [adminExists] = await connexion.query(`SELECT * FROM users WHERE id = ?`, [
+            const [adminExists] = await connexion.query(`SELECT *
+                                                         FROM users
+                                                         WHERE id = ?`, [
                 adminID,
             ]);
 
@@ -12,7 +15,8 @@ export default class LobbyClass {
             }
 
             const results = await connexion.query(
-                `INSERT INTO lobbies (name, admin_id) VALUES (?,?)`,
+                `INSERT INTO lobbies (name, admin_id)
+                 VALUES (?, ?)`,
                 [name, adminID]
             );
             return results;
@@ -53,6 +57,33 @@ export default class LobbyClass {
             return result.insertId;
         } finally {
             if (connexion) await connexion.release();
+        }
+    }
+
+    async getUser(lobbyId, userId) {
+        try {
+            const [user] = await connexion.query(
+                "SELECT * FROM lobby_users WHERE lobby_id = ? AND user_id = ?",
+                [lobbyId, userId]
+            );
+            return user;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getUsers(lobbyId) {
+        try {
+            console.log(lobbyId);
+            const [users] = await connexion.query(
+                `SELECT *
+                 FROM lobby_users
+                 WHERE lobby_id = ?`,
+                [lobbyId]
+            );
+            return users;
+        } catch (error) {
+            throw error;
         }
     }
 }

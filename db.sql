@@ -26,3 +26,12 @@ CREATE TABLE messages (
     FOREIGN KEY (lobby_id) REFERENCES lobbies(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE lobby_users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    lobby_id INT NOT NULL,
+    user_id INT NOT NULL,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (lobby_id) REFERENCES lobbies(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
